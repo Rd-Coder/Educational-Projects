@@ -13,6 +13,7 @@ public abstract class AbstractPessoa {
         this.nome = nome; 
     }
 
+
     //GETTERS E SETTERS
     public void setNome(String nome) { 
         this.nome = nome; }
@@ -24,4 +25,6 @@ public abstract class AbstractPessoa {
     public String toString() { 
         return this.nome; 
     }
+
+    
 }

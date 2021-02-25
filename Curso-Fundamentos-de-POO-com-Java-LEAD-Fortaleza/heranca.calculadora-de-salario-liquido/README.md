@@ -1,28 +1,25 @@
+# Projeto: Entendendo as Interfaces
+
 <div>
-    <h1>
-        Projeto: Compreendendo as Classes Abstratas
-        <font size="3">
-            <br><i>por Ruan Dias - RdCoder</i>
-        </font>
-    </h1>
+    <font size="2">
+            <i>por Ruan Dias - RdCoder</i> <br><br>
+    </font>
 </div>
 
 Este projeto faz parte de um conjunto de implementações práticas
 pessoais voltadas a desenvolver os conhecimentos adquiridos por
-mim no curso de
-[_Fundamentos de POO com Java_](http://leadfortaleza.com.br/dal/?cp_cursos=/curso-de-fundamentos-de-programacao-orientada-a-objetos-com-java/),
+mim no curso de 
+[_Fundamentos de POO com Java_](http://leadfortaleza.com.br/dal/?cp_cursos=/curso-de-fundamentos-de-programacao-orientada-a-objetos-com-java/), 
  da instituição
 [_LEAD Fortaleza_](https://leadfortaleza.com.br).
 
-Você encontrará aqui, neste documento, informações úteis sobre a
-atividade sugestionada pelo curso, como os objetivos a serem
-alcançados, detalhes acerca da proposta prática feita, além
-da descrição a respeito solução encontrada para resolver a
+Você encontrará aqui, neste documento, informações úteis sobre esta 
+atividade sugestionada pelo curso, como os objetivos a serem 
+alcançados, detalhes sobre a proposta prática feita, além
+da descrição sobre a solução encontrada para resolver a
 problemática.
 
-
 ## <br> Informações sobre o projeto
-
 ### ▸ Objetivo:
     Aplicar o paradigma da herança em um projeto real.
 

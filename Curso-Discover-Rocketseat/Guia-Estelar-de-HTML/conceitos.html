@@ -1,0 +1,71 @@
+<!-- CONCEITOS INICIAIS SOBRE HTML - SESSÃO "O GUIA ESTELAR DE HTML" -->
+
+<!-- Notas úteis sobre o HTML:
+
+    # ANATOMIA DAS TAGS
+
+    — ELEMENTO:
+        Tag de abertura + conteúdo + tag de fechamento.
+    — ELEMENTO VAZIO:
+        Somente tag de abertura.
+    — TAG DE ABERTURA:
+        <tipo [atributos([nome]="[valor]")]>
+            - Atributos: de configuração ou informações extras.
+                - Atributos globais: para qualquer tag;
+                - Atributos especiíficos: particular de uma tag;
+                - Atributo booleano: 
+                    Apenas nome, representa valores booleanos.
+
+        ## ATRIBUTOS GLOBAIS PRINCIPAIS (apenas os que não conheço):
+            — contenteditable="[true/false]" ->
+                Define se o conteúdo pode ser editado.
+            — data-[nome-qualquer-ou-atributo] ->
+                Metadados personalizados para uso no backend.
+            — hidden
+                Torna um elemento invisível.
+            — tabindex="[número]"
+                Ordem crescente de foco por tabulação.
+            — title="*"
+                O título, texto que também é exibido ao passar o
+                mouse sobre.
+
+    — HIERARQUIA:
+        As tags podem ser aninhadas, existindo pais e filhos;
+        interpretação em cascata.
+        
+    — POSICIONAMENTO:
+        - Tags em linha: não quebram linha;
+        - Tags em bloco: ocupam a linha inteira.
+    
+    
+    # CARACTERES RESERVADOS (iniciam-se com & e terminam com ;)
+        — Exemplos:
+            - &nbsp -> espaço em branco;
+            - &lt e &gt -> '<' e '>');
+            - &amp -> '&';
+            - &quot -> aspa duplo(");
+            - &apos -> aspa simples(');
+-->
+
+<!-- PRÁTICA I #2.1.1 Conceitos - Guia de HTML -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" 
+            content="width=device-width initial-scale=1.0"/>
+        <title>Home | Capítulo #2 - Discover</title>
+    </head>
+    <body>
+        <h1>Visite o <a href="https://google.com">Google</a></h1>
+        <p>
+            O <strong>Google</strong> é uma plataforma de busca pela internet.
+            <br>Dê um <em>google</em> agora por aqui:
+            <p>
+                <strong>
+                    <a href="https://google.com>">Saiba mais</a>
+                </strong>
+            </p>
+        </p>
+    </body>
+</html>

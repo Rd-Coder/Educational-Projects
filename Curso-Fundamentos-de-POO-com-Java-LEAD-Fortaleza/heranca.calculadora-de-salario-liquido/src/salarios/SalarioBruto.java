@@ -1,43 +1,38 @@
 package salarios;
 
 /**
- * A classe {@code SalarioBruto} representa um salário bruto qualquer, ou seja,
- * o salário sem adição de bônus.
+ * A classe {@code SalarioBruto} representa de forma concreta um
+ * salário bruto qualquer, ou seja, o salário sem adição de bônus.
  */
-public class SalarioBruto {
+public class SalarioBruto extends Salario {
     
-    //ATRIBUTOS
-    /** O valor bruto do salário. */
-    private float valor;
-
-    
-    //CONSTRUTORES
+    //-> CONSTRUTORES
     /** 
-     * Constrói uma nova instância de {@code Salario}
+     * Constrói uma nova instância de {@code SalarioBruto}
      * com valor equivalente a R$ 0,00.
      */
     public SalarioBruto() {
-        this.valor = 0;
+        super(0f);
     }
 
     /**
-     * Constrói uma nova instância de {@code Salario}
+     * Constrói uma nova instância de {@code SalarioBruto}
      * com valor equivalente ao passado como argumento.
      * 
      * @param   valor
-     *          o valor bruto do salário, sem bônus.
+     *          o valor bruto do salário, sem bônus
+     * @throws  NullPointerException
+     *          se o {@code valor} passado for nulo
+     * @throws  NumberFormatException
+     *          se o {@code valor} passado for negativo
      */
     public SalarioBruto(float valor) { 
-        this.valor = valor; 
+        super(requireValidValue(
+            valor, 
+            "O parâmetro 'valor' não pode ser nulo", 
+            "O parâmetro 'valor' não pode ser negativo"
+        ));
     }
 
-    //GETTERS E SETTERS
-    public float getValor() {
-        return valor;
-    }
-
-    public void setValor(float valor) {
-        this.valor = valor;
-    }
 
 }

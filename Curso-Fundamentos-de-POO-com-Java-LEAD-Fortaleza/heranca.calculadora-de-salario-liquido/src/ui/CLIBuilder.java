@@ -1,16 +1,13 @@
 package ui;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.Reader;
-import java.nio.Buffer;
-import java.util.Scanner;
 
-import jdk.internal.org.jline.utils.ClosedException;
+import salarios.Salario;
 import salarios.SalarioBruto;
 import salarios.SalarioLiquido;
 
@@ -18,49 +15,85 @@ import salarios.SalarioLiquido;
  * Modela a interface de interação do usuário deste programa
  * através do terminal.
  */
-public class TerminalUI implements Runnable {
+public class CLIBuilder implements Runnable {
 
     //-> ATRIBUTOS - ENTRADAS
     private String nomeDoFuncionario;
     private String salarioBruto;
     private String bonus;
+    private ProcessBuilder commandListener;
 
 
-    //-> RENDERIZAÇÃO E PROCESSAMENTO
+    //-> MÉTODOS ÚTEIS
+    
+    // -> RENDERIZAÇÃO E PROCESSAMENTO
 
     @Override
     public void run() {
-        janSolicitaValores();
-        
-        SalarioBruto sBruto = new SalarioBruto(
-            Float.valueOf(salarioBruto));
-        SalarioLiquido sLiquido = new SalarioLiquido(
-            sBruto, Float.valueOf(bonus));
+        while (true) {
+            limparCLI();
+            janSolicitaValores();
+            limparCLI();
 
-        //- parou aqui - implementar janExibeResultado();
+            SalarioBruto sBruto = new SalarioBruto(Float.valueOf(salarioBruto));
+            SalarioLiquido sLiquido = new SalarioLiquido(sBruto, Float.valueOf(bonus));
+
+            janExibeResultado(sLiquido);
+
+            CompTextBox novoCalculo = new CompTextBox();
+            novoCalculo.comLabel("\n> Enter para novo cálculo...");
+                
+            novoCalculo.render();
+            novoCalculo.close();
+        }
     }
-
 
     /** Formulário que solicita as informações salariais do funcionário */
     public void janSolicitaValores() {
         String nome, salarioBruto, bonus;
 
         compCabecalho();
-        System.out.println(
-            "-> Insira as informações requeridas para o cálculo:");
-        
+        System.out.println("-> Insira as informações requeridas para o cálculo:\n");
+
         CompTextBox txtBox = new CompTextBox();
-        txtBox.layout(false);
 
         // solicita os dados
-        nome = txtBox.comLabel("Nome do Funcionário:").render();
-        salarioBruto = txtBox.comLabel("Salário Bruto: R$").render();
-        bonus = txtBox.comLabel("Bônus: R$").render();
+        nome = txtBox.comLabel("> Nome do Funcionário:").render();
+        salarioBruto = txtBox.comLabel("> Salário Bruto: R$").render();
+        bonus = txtBox.comLabel("> Bônus: R$").render();
 
         txtBox.close();
-        nomeDoFuncionario = nome;
+        this.nomeDoFuncionario = nome;
         this.salarioBruto = salarioBruto;
         this.bonus = bonus;
+
+    }
+
+    /** Exibe o salário final resultante do cálculo */
+    public void janExibeResultado(final Salario resultado) {
+        compCabecalho("Salário Final Líquido");
+
+        System.out.printf(
+            "-> Salário final para '%s:'\n\tR$ %,.2f\n",
+            nomeDoFuncionario, resultado.getValor()
+        );
+    }
+
+    /** Limpa o terminal, uma ação que pausa a thread até que esteja concluída */
+    public void limparCLI() {
+        String[] commands = 
+            ( System.getProperty("os.name").contains("Windows") )
+                ? new String[]{"cmd", "/c", "cls"}
+                : new String[]{"clear"};
+
+        if (commandListener == null)
+            commandListener = new ProcessBuilder(commands).inheritIO();
+
+        try {
+            commandListener.start().waitFor();
+        } catch (IOException | InterruptedException ioOrInterrupted) {
+            ioOrInterrupted.printStackTrace();
+        }
     }
 
 
@@ -68,12 +101,27 @@ public class TerminalUI implements Runnable {
 
     /** 
      * Componente que exibe o título do programa mais uma linha
-     * em branco embaixo 
-     * */
+     * em branco embaixo, sem subtítulo.
+     */
     public static void compCabecalho() {
         System.out.println(
             "--> " + ProgramInfo.TITUTO_PROGRAMA.toUpperCase() +
             " <--\n"
+        );
+    }
+
+    /** 
+     * Componente que exibe o título do programa seguido de um
+     * subtítulo personalizado, mais uma linha em branco embaixo.
+     * 
+     * @param   subtituo    o subtítulo personalizado 
+     */
+    public static void compCabecalho(String subtitulo) {
+        System.out.println(
+            "--> " 
+            + ProgramInfo.TITUTO_PROGRAMA.toUpperCase()
+            + " — " + subtitulo
+            + " <--\n"
         );
     }
 
@@ -97,9 +145,6 @@ public class TerminalUI implements Runnable {
         
         //-> ATRIBUTOS
 
-        /** O buffer de entrada */
-        private BufferedReader in;
-
         /** O texto descritivo deste TextBox */
         private String label;
 
@@ -121,8 +166,7 @@ public class TerminalUI implements Runnable {
          * linha</i>).
          */
         public CompTextBox() {
-            inLine = false;
-            in = new BufferedReader(new InputStreamReader(System.in));
+            inLine = true;
         }
 
         /**
@@ -173,48 +217,36 @@ public class TerminalUI implements Runnable {
          * 
          * @return  o texto digitado sobre o campo
          * 
-         * @throws  Exception   
+         * @throws  RuntimeException   
          *          se este componente estiver fechado
          *          para uso
          */
         @Override
         public String render() {
             if (closed)
-                throw new Exception("Este TextBox está fechado para uso");
+                throw new RuntimeException("Este TextBox está fechado para uso");
 
             String saida = (inLine) ? label + " " : label + " \n";
-
             System.out.print(saida);
-            return in.readLine();
+
+            String entrada;
+            try {
+                entrada = new BufferedReader(new InputStreamReader(System.in)).readLine();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+                entrada = null;
+            }
+
+            return entrada;
         }
 
         @Override
         /** Fecha o buffer de entrada do teclado */
         public void close() {
-            try {
-                in.close();
-            } catch (IOException io) {
-                io.printStackTrace();
-            }
+            closed = true;
         }
 
     }
 
-
-
-
-    public static void main2(String[] args) {
-        Scanner in = new Scanner(System.in);
-
-        String texto = """
-            %Nome: %s
-            %Idade: %s
-            """;
-
-        in.close();
-    }
-
-    public static void main(String[] args) {
-
-    }
+    
 }

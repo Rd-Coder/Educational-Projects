@@ -1,5 +1,4 @@
-import java.util.Scanner;
-import salarios.*;
+import ui.CLIBuilder;
 
 /** 
  * A classe {@code Principal} tem como função executar a aplicação
@@ -10,7 +9,7 @@ import salarios.*;
  */
 public class Principal {
     public static void main(String[] args) {
-        
-        
+        Runnable cli = new CLIBuilder();
+        cli.run();
     }
 }

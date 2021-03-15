@@ -1,4 +1,4 @@
-package organizaveis;
+package rdcoder.edu.fundamentos_de_poo_com_java.interfaces.organizaveis;
 
 /** 
  * A interface {@code Organizavel} representa um objeto organizável

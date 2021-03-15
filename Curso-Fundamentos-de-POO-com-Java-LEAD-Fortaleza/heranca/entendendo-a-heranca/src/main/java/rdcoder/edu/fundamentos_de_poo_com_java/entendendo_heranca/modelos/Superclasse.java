@@ -1,4 +1,4 @@
-package modelos;
+package rdcoder.edu.fundamentos_de_poo_com_java.entendendo_heranca.modelos;
 
 /** 
  * A classe {@code Superclasse} representa uma superclasse qualquer.

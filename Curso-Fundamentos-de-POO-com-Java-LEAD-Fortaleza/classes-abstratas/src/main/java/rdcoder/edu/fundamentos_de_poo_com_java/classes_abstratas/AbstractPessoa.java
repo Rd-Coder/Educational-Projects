@@ -1,3 +1,5 @@
+package rdcoder.edu.fundamentos_de_poo_com_java.classes_abstratas;
+
 /**
  * A classe abstrata {@code Pessoa} representa um indivíduo humano.
  */

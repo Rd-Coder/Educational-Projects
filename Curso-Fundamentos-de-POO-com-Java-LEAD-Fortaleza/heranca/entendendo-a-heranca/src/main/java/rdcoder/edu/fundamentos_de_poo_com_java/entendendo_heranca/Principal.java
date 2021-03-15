@@ -1,5 +1,6 @@
+package rdcoder.edu.fundamentos_de_poo_com_java.entendendo_heranca;
 
-import modelos.*;
+import rdcoder.edu.fundamentos_de_poo_com_java.entendendo_heranca.modelos.*;
 
 /** 
  * A classe {@code Principal} instancia as classes Superclasse

@@ -1,4 +1,4 @@
-package formasgeometricas;
+package rdcoder.edu.fundamentos_de_poo_com_java.polimorfismo.formasgeometricas;
 
 /** 
  * A classe {@code Quadrado} subclasse de {@code FormaGeometrica},

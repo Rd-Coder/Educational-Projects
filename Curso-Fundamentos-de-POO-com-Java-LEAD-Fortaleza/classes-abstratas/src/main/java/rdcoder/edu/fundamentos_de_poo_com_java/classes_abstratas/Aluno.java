@@ -1,3 +1,5 @@
+package rdcoder.edu.fundamentos_de_poo_com_java.classes_abstratas;
+
 /** A classe {@code Aluno} representa um aluno de uma escola. */
 public class Aluno extends AbstractPessoa {
 

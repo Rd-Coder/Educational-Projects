@@ -1,0 +1,10 @@
+# VSCode Generated Files
+.vscode/
+.classpath
+.settings/
+.project
+bin
+
+# Gradle
+.gradle
+build

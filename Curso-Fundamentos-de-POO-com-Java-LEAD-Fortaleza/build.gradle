@@ -1,5 +1,6 @@
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'eclipse'
 
     sourceCompatibility = 15
 
@@ -11,4 +12,21 @@ subprojects {
     dependencies {
         implementation 'com.google.guava:guava:29.0-jre'
     }
+
+    compileJava {
+        options.compilerArgs += ["--enable-preview"]
+    }
+    compileTestJava {
+        options.compilerArgs += ["--enable-preview"]
+    }
+    //Buildship doesn't use that hooks (https://discuss.gradle.org/t/when-does-buildship-eclipse-customization-run/20781/2)
+    //you need to run `gradle eclipseJdt` separately
+    eclipse.jdt.file.withProperties { props ->
+        props['org.eclipse.jdt.core.compiler.problem.enablePreviewFeatures']= 'enabled'
+        props['org.eclipse.jdt.core.compiler.problem.reportPreviewFeatures']= 'ignore'
+    }
+    test {
+        jvmArgs '--enable-preview'
+    }
+
 }

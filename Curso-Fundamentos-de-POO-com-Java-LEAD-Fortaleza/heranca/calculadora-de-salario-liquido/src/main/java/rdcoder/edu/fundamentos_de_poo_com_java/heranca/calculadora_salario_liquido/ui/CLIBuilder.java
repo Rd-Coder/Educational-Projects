@@ -1,18 +1,13 @@
 package rdcoder.edu.fundamentos_de_poo_com_java.heranca
         .calculadora_salario_liquido.ui;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.Objects;
 
 import  rdcoder.edu.fundamentos_de_poo_com_java.heranca
         .calculadora_salario_liquido.salarios.*;
+import rdcoder.edu.fundamentos_de_poo_com_java.heranca
+        .calculadora_salario_liquido.ui.cli_components.TextBox;
 
 /**
  * Modela a interface de interação do usuário deste programa
@@ -35,23 +30,20 @@ public class CLIBuilder implements Runnable {
     private ProcessBuilder commandListener;
     
 
-    // -> RENDERIZAÇÃO E PROCESSAMENTO
+    // —> RENDERIZAÇÃO E PROCESSAMENTO
 
     /** 
-     * Rege sequência de exibição, solicitação e processamento de
-     * informações através do termina. A lógica é a seguinte:
+     * Executa este programa via terminal. A lógica é a seguinte:
      * 
      * <ol>
      *      <li>
-     *          Executa {@link this#janExibeResultado(...)} para
-     *          capturar do usuário as variáveis de cálculo 
-     *          requeridas;
+     *          Executa {@link this#janSolicitaValores()} para
+     *          capturar as variáveis de cálculo
      *      </li><li>
      *          Solicita o processamento das variáveis para calcular
      *          o salário bonificado;
      *      </li><li>
-     *          Exibe esse resultado em tela, além de guiar o usuário
-     *          para a realização de um novo cálculo.
+     *          Exibe esse resultado em tela e reinicia a calculadora.
      *      </li>
      * </ol>
      * 
@@ -64,20 +56,18 @@ public class CLIBuilder implements Runnable {
             limparCLI();
             VarsBonificacaoBean entradaDoUsuario = 
                 janSolicitaValores();
-            Salario totalBonificado = 
-                new SalarioLiquido(
-                    entradaDoUsuario.salarioABonificar(), 
-                    entradaDoUsuario.bonus() 
-                );
+            Salario totalBonificado = new SalarioLiquido(
+                entradaDoUsuario.salarioBase(), 
+                entradaDoUsuario.bonus()
+            );
 
             limparCLI();
             janExibeResultado(
                 totalBonificado,
                 entradaDoUsuario
             );
-
-            limparCLI();
             sessaoIrParaNovoCalculo();
+            limparCLI();
         }
     }
 
@@ -85,22 +75,23 @@ public class CLIBuilder implements Runnable {
      * Janela que exibe um formulário para solicitar os dados
      * salariais necessários para o cálculo da bonificação. 
      * 
-     * @return  um registro do tipo {@code DadosDaBonificacaoBean}
+     * @return  um registro do tipo {@code VarsBonificacaoBean}
      *          contendo as variáveis coletadas
      */
     public VarsBonificacaoBean janSolicitaValores() {
         String nome, salarioBruto, bonus;
-        TextBox txtBox = new TextBox();
+        TextBox txtBox = new TextBox(TextBox.Layout.MULTILINHA);
 
-        comporCabecalho();
+        comporCabecalho(ProgramInfo.TITUTO_PROGRAMA);
         System.out.println(
-            "-> Insira as informações requeridas para o cálculo:\n");
+            "—> Insira as informações requeridas para o cálculo:\n");
 
         // solicita os dados
-        nome = txtBox.label("> Nome do Funcionário:").render();
-        salarioBruto = txtBox.label("> Salário Bruto: R$").render();
-        bonus = txtBox.label("> Bônus: R$").render();
-        txtBox.close();
+        nome = txtBox.label("> Nome do Funcionário:")
+            .render().valor();
+        salarioBruto = txtBox.label("> Salário Bruto: R$")
+            .render().valor();
+        bonus = txtBox.label("> Bônus: R$").render().valor();
 
         return new VarsBonificacaoBean(
             nome, 
@@ -111,24 +102,22 @@ public class CLIBuilder implements Runnable {
 
     /** Exibe o salário final resultante do cálculo */
     public void janExibeResultado(
-    final Salario resultado, final VarsBonificacaoBean variaveis){
-        compCabecalho("Salário Final Líquido");
+    final Salario resultado, final VarsBonificacaoBean variaveis) {
+        comporCabecalho("Salário Final Líquido");
         System.out.printf(
-            "-> Salário final para '%s:'\n\tR$ %,.2f\n",
+            "—> Salário final para '%s:'\n\tR$ %,.2f\n",
             variaveis.nomeDoFuncionario(),
             resultado.getValor()
         );
     }
 
     /** 
-     * Sessão que aguarda a confirmação do usuário para prosseguir 
-     * para reiniciar o cálculo.
+     * Sessão que aguarda a confirmação do usuário para reiniciar 
+     * o cálculo
      */
     public void sessaoIrParaNovoCalculo() {
-        TextBox confirmaListener = new TextBox();
-        confirmaListener.label("\n> Enter para novo cálculo...");
-        confirmaListener.render();
-        confirmaListener.close();
+        new TextBox(TextBox.Layout.EM_LINHA, 
+            "\n> Enter para novo cálculo...").render();
     }
 
     /** 

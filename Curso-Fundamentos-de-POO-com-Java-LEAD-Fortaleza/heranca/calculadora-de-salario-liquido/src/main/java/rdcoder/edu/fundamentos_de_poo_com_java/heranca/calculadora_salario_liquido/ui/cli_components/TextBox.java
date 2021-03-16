@@ -38,6 +38,10 @@ public class TextBox implements Componente<TextBox> {
         layout = Layout.SOMENTE_CAIXA_DE_TEXTO;
     }
 
+    public TextBox(Layout layout) {
+        this.layout = layout;
+    }
+
     /** 
      * Constrói uma caixa de texto vazia, com descrição, 
      * e com o {@code layout} escolhido.

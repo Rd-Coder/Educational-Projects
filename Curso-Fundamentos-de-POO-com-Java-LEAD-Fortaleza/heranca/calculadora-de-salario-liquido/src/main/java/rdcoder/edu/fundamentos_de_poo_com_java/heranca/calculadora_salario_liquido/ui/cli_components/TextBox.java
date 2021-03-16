@@ -38,6 +38,15 @@ public class TextBox implements Componente<TextBox> {
         layout = Layout.SOMENTE_CAIXA_DE_TEXTO;
     }
 
+    /** 
+     * Constrói uma caixa de texto vazia, com descrição, 
+     * e com o {@code layout} escolhido.
+     */
+    public TextBox(Layout layout, String label) {
+        this.layout = layout;
+        this.label = label;
+    }
+
 
     //—> SOBRESCRITAS DE 'COMPONENTE'
 
@@ -111,7 +120,7 @@ public class TextBox implements Componente<TextBox> {
      * constante retorna uma função do tipo {@code LayoutBuilder} que
      * modela esse layout.
      */
-    private static enum Layout {
+    public static enum Layout {
 
         /** Modela apenas a caixa de texto com a <i>label</i> oculta */
         SOMENTE_CAIXA_DE_TEXTO (

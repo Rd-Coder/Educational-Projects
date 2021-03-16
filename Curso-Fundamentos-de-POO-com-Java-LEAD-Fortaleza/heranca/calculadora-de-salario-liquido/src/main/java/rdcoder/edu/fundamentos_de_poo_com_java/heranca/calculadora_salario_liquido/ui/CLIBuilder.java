@@ -82,7 +82,7 @@ public class CLIBuilder implements Runnable {
         String nome, salarioBruto, bonus;
         TextBox txtBox = new TextBox(TextBox.Layout.MULTILINHA);
 
-        comporCabecalho(ProgramInfo.TITUTO_PROGRAMA);
+        exibirCabecalho(comporCabecalho(ProgramInfo.TITUTO_PROGRAMA));
         System.out.println(
             "—> Insira as informações requeridas para o cálculo:\n");
 
@@ -103,7 +103,9 @@ public class CLIBuilder implements Runnable {
     /** Exibe o salário final resultante do cálculo */
     public void janExibeResultado(
     final Salario resultado, final VarsBonificacaoBean variaveis) {
-        comporCabecalho("Salário Final Líquido");
+        exibirCabecalho(
+            comporCabecalho(ProgramInfo.TITUTO_PROGRAMA, 
+                "Salário Final Líquido") );
         System.out.printf(
             "—> Salário final para '%s:'\n\tR$ %,.2f\n",
             variaveis.nomeDoFuncionario(),
@@ -196,6 +198,10 @@ public class CLIBuilder implements Runnable {
         return comporCabecalho(titulo, null);
     }
 
+    public static void exibirCabecalho(StringBuilder cabecalho) {
+        System.out.println(cabecalho.toString());
+    }
+
     /** 
      * Componente que modela o título do programa seguido de um
      * subtítulo personalizado, mais uma linha em branco embaixo.
@@ -216,7 +222,7 @@ public class CLIBuilder implements Runnable {
      */
     public static StringBuilder comporCabecalho(String titulo, String subtitulo) {
         StringBuilder cabecalho = new StringBuilder();
-        cabecalho.append("——> " + titulo);
+        cabecalho.append("——> " + titulo.toUpperCase());
         if (Objects.nonNull(subtitulo))
             cabecalho.append(" — " + subtitulo);
         cabecalho.append(" <——");

@@ -63,17 +63,18 @@ public class TextBox implements Componente<TextBox> {
      *          caracteres inseridos neste {@code TextBox}
      */
     @Override
-    public TextBox render() {
+    public TextBox render() throws IOException {
         String vlr = null;
+        BufferedReader entradaStream = null;
         try {
-            var entradaStream = 
+            entradaStream = 
                 new BufferedReader(new InputStreamReader(System.in));
             vlr = layout.builder().build(this, entradaStream);
-        } catch (IOException ioLeituraTecladoExc) {
-            ioLeituraTecladoExc.printStackTrace();
         } finally {
             if (Objects.nonNull(vlr))
                 this.valor = vlr;
+            if (Objects.nonNull(entradaStream))
+                entradaStream.close();
         }
         return this;
     }
@@ -161,7 +162,7 @@ public class TextBox implements Componente<TextBox> {
          */
         MULTILINHA(
             (TextBox txtBox, BufferedReader txtField) -> {
-                return txtBox.label + " \n\t> " 
+                return txtBox.label() + " \n\t> " 
                 + LayoutBuilder.buildCampoDeTexto(txtField);
             }
         );

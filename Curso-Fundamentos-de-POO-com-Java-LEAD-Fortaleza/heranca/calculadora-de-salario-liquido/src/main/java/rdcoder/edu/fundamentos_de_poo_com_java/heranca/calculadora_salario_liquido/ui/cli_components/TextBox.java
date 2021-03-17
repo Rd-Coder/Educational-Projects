@@ -73,8 +73,6 @@ public class TextBox implements Componente<TextBox> {
         } finally {
             if (Objects.nonNull(vlr))
                 this.valor = vlr;
-            if (Objects.nonNull(entradaStream))
-                entradaStream.close();
         }
         return this;
     }
@@ -144,9 +142,8 @@ public class TextBox implements Componente<TextBox> {
          */
         EM_LINHA(
             (TextBox txtBox, BufferedReader txtField) -> { 
-                return 
-                    txtBox.label() + " "
-                    + LayoutBuilder.buildCampoDeTexto(txtField);
+                System.out.print(txtBox.label() + " ");
+                return LayoutBuilder.buildCampoDeTexto(txtField);
             }
         ),
 
@@ -162,8 +159,8 @@ public class TextBox implements Componente<TextBox> {
          */
         MULTILINHA(
             (TextBox txtBox, BufferedReader txtField) -> {
-                return txtBox.label() + " \n\t> " 
-                + LayoutBuilder.buildCampoDeTexto(txtField);
+                System.out.print(txtBox.label() + " \n\t> ");
+                return LayoutBuilder.buildCampoDeTexto(txtField);
             }
         );
 
@@ -225,7 +222,6 @@ public class TextBox implements Componente<TextBox> {
         static String buildCampoDeTexto(BufferedReader campoDeTxt) 
         throws IOException {
             String txt = campoDeTxt.readLine();
-            campoDeTxt.close();
             return txt;
         }
     

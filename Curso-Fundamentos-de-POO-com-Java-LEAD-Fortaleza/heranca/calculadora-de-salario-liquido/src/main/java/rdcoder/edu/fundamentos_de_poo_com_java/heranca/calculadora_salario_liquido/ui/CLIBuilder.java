@@ -67,47 +67,60 @@ public class CLIBuilder implements Runnable {
                 entradaDoUsuario
             );
             sessaoIrParaNovoCalculo();
-            limparCLI();
         }
     }
 
     /** 
      * Janela que exibe um formulário para solicitar os dados
-     * salariais necessários para o cálculo da bonificação. 
+     * para o cálculo da bonificação. 
      * 
      * @return  um registro do tipo {@code VarsBonificacaoBean}
      *          contendo as variáveis coletadas
      */
     public VarsBonificacaoBean janSolicitaValores() {
-        String nome, salarioBruto, bonus;
-        TextBox txtBox = new TextBox(TextBox.Layout.MULTILINHA);
+        final String[] labels = {
+            "Nome do Funcionário:",
+            "Salário Base: R$",
+            "Bônus: R$"
+        };
+        final int 
+            NOME = 0, SALARIO_BASE = 1, BONUS = 2,
+            len = labels.length;
+        final var valores = new String[len];
+        var txtBox = new TextBox(TextBox.Layout.MULTILINHA);
 
         exibirCabecalho(comporCabecalho(ProgramInfo.TITUTO_PROGRAMA));
         System.out.println(
-            "—> Insira as informações requeridas para o cálculo:\n");
-
-        // solicita os dados
-        nome = txtBox.label("> Nome do Funcionário:")
-            .render().valor();
-        salarioBruto = txtBox.label("> Salário Bruto: R$")
-            .render().valor();
-        bonus = txtBox.label("> Bônus: R$").render().valor();
-
+            "—> Insira as informações requeridas para o cálculo:\n" );
+        for (int id = 0; id < len; id++) {
+            while (true) {
+                txtBox.label(labels[id]);
+                try {
+                    valores[id] = txtBox.render().valor();
+                    break;
+                } catch (IOException io) {
+                    System.out.println(
+                        "\n\t!!> Erro ao ler valor, tente novamente..."
+                        + "\n\t> ");
+                    txtBox.layout(TextBox.Layout.SOMENTE_CAIXA_DE_TEXTO);
+                    continue;
+                }
+            }
+        }
         return new VarsBonificacaoBean(
-            nome, 
-            new SalarioBruto(Float.parseFloat(salarioBruto)),
-            Float.parseFloat(bonus) 
+            valores[NOME],
+            new SalarioBruto(Float.parseFloat(valores[SALARIO_BASE])),
+            Float.parseFloat(valores[BONUS]) 
         );
     }
 
     /** Exibe o salário final resultante do cálculo */
     public void janExibeResultado(
     final Salario resultado, final VarsBonificacaoBean variaveis) {
-        exibirCabecalho(
-            comporCabecalho(ProgramInfo.TITUTO_PROGRAMA, 
-                "Salário Final Líquido") );
+        exibirCabecalho(comporCabecalho(
+            ProgramInfo.TITUTO_PROGRAMA, "Salário Final Líquido") );
         System.out.printf(
-            "—> Salário final para '%s:'\n\tR$ %,.2f\n",
+            "\n—> Salário final para '%s:'\n\t[R$ %,.2f]\n",
             variaveis.nomeDoFuncionario(),
             resultado.getValor()
         );
@@ -118,8 +131,10 @@ public class CLIBuilder implements Runnable {
      * o cálculo
      */
     public void sessaoIrParaNovoCalculo() {
-        new TextBox(TextBox.Layout.EM_LINHA, 
+        try {
+            new TextBox(TextBox.Layout.EM_LINHA, 
             "\n> Enter para novo cálculo...").render();
+        } catch (Exception e) { return; }
     }
 
     /** 

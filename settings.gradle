@@ -8,9 +8,6 @@
  */
 
 rootProject.name = 'Education'
-include('Curso-Fundamentos-de-POO-com-Java-LEAD-Fortaleza:classes-abstratas')
-include('Curso-Fundamentos-de-POO-com-Java-LEAD-Fortaleza:heranca:calculadora-de-salario-liquido')
-include('Curso-Fundamentos-de-POO-com-Java-LEAD-Fortaleza:heranca:entendendo-a-heranca')
-include('Curso-Fundamentos-de-POO-com-Java-LEAD-Fortaleza:interfaces')
-include('Curso-Fundamentos-de-POO-com-Java-LEAD-Fortaleza:polimorfismo')
+include('Curso-Fundamentos-de-POO-com-Java-LEAD-Fortaleza:calculadora-de-salario-liquido')
+include('Curso-Fundamentos-de-POO-com-Java-LEAD-Fortaleza:polimorfismo-formas-geometricas')
 include('Curso-Discover-Rocketseat:Guia-Estelar-de-HTML')

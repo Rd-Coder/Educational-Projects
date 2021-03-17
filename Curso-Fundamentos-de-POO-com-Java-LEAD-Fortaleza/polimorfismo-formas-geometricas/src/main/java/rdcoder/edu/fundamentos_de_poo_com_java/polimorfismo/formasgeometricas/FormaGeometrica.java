@@ -1,4 +1,5 @@
-package rdcoder.edu.fundamentos_de_poo_com_java.polimorfismo.formasgeometricas;
+package rdcoder.edu.fundamentos_de_poo_com_java
+        .polimorfismo.formasgeometricas;
 
 /** 
  * A classe abstrata {@code FormaGeometrica} representa genericamente

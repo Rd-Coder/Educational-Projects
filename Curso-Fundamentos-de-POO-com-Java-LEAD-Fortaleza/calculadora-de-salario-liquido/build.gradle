@@ -7,7 +7,7 @@ dependencies {
 }
 
 application {
-    mainClass = 'rdcoder.fundamentos_de_poo_com_java.heranca.calculadora_salario_liquido.Principal'
+    mainClass = 'rdcoder.fundamentos_de_poo_com_java.calculadora_salario_liquido.heranca.Principal'
 }
 
 mainClassName = 'rdcoder.fundamentos_de_poo_com_java.heranca.calculadora_salario_liquido.Principal'

@@ -1,6 +1,6 @@
 <div>
     <h1>
-        Projeto: Compreendendo as Classes Abstratas
+        Projeto: Calculadora de Salário Líquido
         <font size="3">
             <br><i>por Ruan Dias - RdCoder</i>
         </font>

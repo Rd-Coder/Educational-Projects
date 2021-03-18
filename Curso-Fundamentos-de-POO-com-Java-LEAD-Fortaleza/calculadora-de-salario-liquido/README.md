@@ -6,9 +6,10 @@
         </font>
     </h1>
 </div>
+
 ​	Este projeto faz parte de um conjunto de implementações práticas pessoais voltadas a desenvolver os conhecimentos adquiridos por mim no curso de
-[_Fundamentos de POO com Java_](http://leadfortaleza.com.br/dal/?cp_cursos=/curso-de-fundamentos-de-programacao-orientada-a-objetos-com-java/),
-da instituição [_LEAD Fortaleza_](https://leadfortaleza.com.br).
+[Fundamentos de POO com Java](http://leadfortaleza.com.br/dal/?cp_cursos=/curso-de-fundamentos-de-programacao-orientada-a-objetos-com-java/),
+da instituição [LEAD Fortaleza](http://leadfortaleza.com.br).
 
 Você encontrará neste documento informações úteis sobre a
 atividade sugestionada pelo curso — [objetivos](#objetivo) a serem

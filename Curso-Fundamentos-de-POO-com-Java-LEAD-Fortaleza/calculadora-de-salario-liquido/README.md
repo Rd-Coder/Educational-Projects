@@ -52,7 +52,19 @@ alcançados, detalhes acerca da [proposta](#proposta) feita e da [solução](#so
 
 
 
-​	Por fim, obtemos uma aplicação de terminal aparentemente simples, porém robusta e escalável por dentro, que encaminha o usuário para digitar o nome do funcionário, o salário base e o bônus que se quer aplicar sobre ele. Em seguida, integra essas variáveis, para, no fim, exibir o resultado ao usuário e guiá-lo para um novo cálculo, se desejado.
+​	Por fim, obtemos uma aplicação de terminal aparentemente simples, porém robusta e escalável por dentro, que encaminha o usuário para digitar o nome do funcionário, o salário base e o bônus que se quer aplicar sobre ele. 
+
+![Janela inicial da aplicação](./imgs/home-screenshot.jpg)
+
+<span style="color:#4f4f4f; margin-top:0">Tela inicial da aplicação</span>
+
+
+
+​	Em seguida, integra essas variáveis, para, no fim, exibir o resultado ao usuário e guiá-lo para um novo cálculo, se desejado.
+
+![Janela que exibe resultado](./imgs/resultado-screenshot.jpg)
+
+<span style="color:#4f4f4f; margin-top:0">Sessão que exibe o resultado</span>
 
 ----
 

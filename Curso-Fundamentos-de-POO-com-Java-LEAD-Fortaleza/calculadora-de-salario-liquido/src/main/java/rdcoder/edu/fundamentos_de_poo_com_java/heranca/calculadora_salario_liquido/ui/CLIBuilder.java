@@ -2,6 +2,7 @@ package rdcoder.edu.fundamentos_de_poo_com_java.heranca
         .calculadora_salario_liquido.ui;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 import  rdcoder.edu.fundamentos_de_poo_com_java.heranca
@@ -52,6 +53,7 @@ public class CLIBuilder implements Runnable {
      */
     @Override
     public void run() {
+        definirEncoding(65001);
         while (true) {
             limparCLI();
             VarsBonificacaoBean entradaDoUsuario = 
@@ -91,7 +93,7 @@ public class CLIBuilder implements Runnable {
 
         exibirCabecalho(comporCabecalho(ProgramInfo.TITUTO_PROGRAMA));
         System.out.println(
-            "—> Insira as informações requeridas para o cálculo:\n" );
+            "-> Insira as informações requeridas para o cálculo:\n" );
         for (int id = 0; id < len; id++) {
             while (true) {
                 txtBox.label(labels[id]);
@@ -120,7 +122,7 @@ public class CLIBuilder implements Runnable {
         exibirCabecalho(comporCabecalho(
             ProgramInfo.TITUTO_PROGRAMA, "Salário Final Líquido") );
         System.out.printf(
-            "\n—> Salário final para '%s:'\n\t[R$ %,.2f]\n",
+            "\n=> Salário final para '%s:'\n\t[R$ %,.2f]\n",
             variaveis.nomeDoFuncionario(),
             resultado.getValor()
         );
@@ -157,6 +159,11 @@ public class CLIBuilder implements Runnable {
         }
     }
 
+    public void definirEncoding(int chcp) {
+        try { execute("chcp", Integer.toString(chcp)); }
+        catch (IOException io) {}
+    }
+
     /**
      * Executa comandos via {@link ProcessBuilder#inheritIO()} e,
      * se falho, tenta novamente até um limite de {@code maxTentativas}.
@@ -189,6 +196,8 @@ public class CLIBuilder implements Runnable {
     throws IOException {
         if (Objects.isNull(commandListener))
             commandListener = new ProcessBuilder(cmds).inheritIO();
+        else
+            commandListener.command(cmds);
         try {
             commandListener.start().waitFor(); // bloqueante
         } catch (InterruptedException interrupted) {}
@@ -197,10 +206,24 @@ public class CLIBuilder implements Runnable {
     
     //—> BEANS
 
-    /** Registro que recolhe as variáveis necessárias para o cálculo */
-    private record VarsBonificacaoBean(
-        String nomeDoFuncionario, Salario salarioBase, float bonus
-    ) {}
+    /** Bean que recolhe as variáveis necessárias para o cálculo */
+    private final class VarsBonificacaoBean {
+        
+        private String nome;
+        private Salario salarioBase;
+        private float bonus;
+
+        public VarsBonificacaoBean(String nomeDoFuncionario,
+        Salario salarioBase, float bonus) {
+            this.nome = nomeDoFuncionario;
+            this.salarioBase = salarioBase;
+            this.bonus = bonus;
+        }
+
+        public String nomeDoFuncionario() { return nome; }
+        public Salario salarioBase() { return salarioBase; }
+        public float bonus() { return bonus; }
+    }
 
 
     //—> UTILIDADES ESTÁTICAS
@@ -237,10 +260,10 @@ public class CLIBuilder implements Runnable {
      */
     public static StringBuilder comporCabecalho(String titulo, String subtitulo) {
         StringBuilder cabecalho = new StringBuilder();
-        cabecalho.append("——> " + titulo.toUpperCase());
+        cabecalho.append("==> " + titulo.toUpperCase());
         if (Objects.nonNull(subtitulo))
-            cabecalho.append(" — " + subtitulo);
-        cabecalho.append(" <——");
+            cabecalho.append(" = " + subtitulo);
+        cabecalho.append(" <==");
         return cabecalho;
     }
 

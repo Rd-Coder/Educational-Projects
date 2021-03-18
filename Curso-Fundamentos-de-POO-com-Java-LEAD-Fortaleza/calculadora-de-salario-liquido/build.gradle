@@ -1,16 +1,9 @@
 apply plugin: 'application'
- 
-repositories {
-}
-
-dependencies {
-}
+sourceCompatibility=15
 
 application {
-    mainClass = 'rdcoder.fundamentos_de_poo_com_java.calculadora_salario_liquido.heranca.Principal'
+    mainClass = 'rdcoder.edu.fundamentos_de_poo_com_java.heranca.calculadora_salario_liquido.Principal' 
 }
-
-mainClassName = 'rdcoder.fundamentos_de_poo_com_java.heranca.calculadora_salario_liquido.Principal'
 
 task copyLicense {
     outputs.file new File("$buildDir/LICENSE")
@@ -25,3 +18,5 @@ task copyLicense {
 applicationDistribution.from(copyLicense) {
     into ''
 }
+
+
